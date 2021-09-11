@@ -31,7 +31,9 @@
  */
 
     getRandomPhrase() {
+        
         const randomNumber = Math.ceil(Math.random() * this.phrases.length) -1;
-        return this.phrases[randomNumber];
+        const phrase = new Phrase(this.phrases[randomNumber])
+        return phrase;
     };
  }
