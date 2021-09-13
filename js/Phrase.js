@@ -13,28 +13,49 @@
     addPhraseToDisplay() {
         const phraseLocation = document.getElementById('phrase');
         const ul = phraseLocation.firstElementChild;
-        while (ul.firstChild) {
-            ul.removeChild(parent.firstChild);
-        }
         const phrase = this.phrase;
-        console.log(phrase);
-        console.log(phrase.length);
         for (let i=0; i<phrase.length; i++) {
             const character = phrase.charAt(i);
+            const li = document.createElement('li');
+            li.textContent = character;
             if (/[a-z]/.test(character)) {
-                const li = document.createElement('li');
-                li.textContent = character;
                 li.className = 'letter';
-                ul.appendChild(li);
             } else {
-                const li = document.createElement('li');
-                li.textContent = character;
                 li.className = 'space';
-                ul.appendChild(li);
             }
-            
+            ul.appendChild(li);
         }
-          
     };
- }
 
+/**
+ * Checks if passed letter is in phrase
+ * @param (string) letter - Letter to check
+ */
+
+    checkLetter(letter) {
+        const phrase = this.phrase;
+        let matchedLetter;
+        for (let i=0; i<phrase.length; i++){
+            if (phrase.charAt(i) === letter) {
+                matchedLetter = letter;
+            }
+        }
+        return matchedLetter;
+        
+    };
+
+/**
+ * Displays passed letter on screen after a match is found
+ * @param (string) letter - Letter to display
+ */
+
+    showMatchedLetter(letter) {
+        const matchedLetter = document.querySelectorAll('.letter');
+        matchedLetter.forEach(item => {
+            if (item.textContent === letter) {
+                item.className = "show";
+            }
+        });
+    }
+
+};
