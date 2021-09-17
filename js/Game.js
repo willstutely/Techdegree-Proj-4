@@ -126,12 +126,14 @@ class Game {
         const message = document.getElementById('game-over-message');
         if (gameWon) {
             overlay.style.display = 'block';
+            overlay.className = 'win';
             message.textContent = "Congratulations, you won!"
             const h = document.createElement('p');
             h.textContent = `"${this.activePhrase.phrase}"`;
             message.appendChild(h) 
         } else if (this.missed === 5) {
             overlay.style.display = 'block';
+            overlay.className = 'lose';
             message.textContent = "You were so close...better luck next time."
         }
     };
