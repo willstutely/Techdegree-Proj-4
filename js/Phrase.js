@@ -7,9 +7,9 @@
         this.phrase = phrase.toLowerCase();
     }
 
-    /**
-     * Display phrase on game board
-     */
+/**
+ * Display phrase on game board
+ */
     addPhraseToDisplay() {
         const phraseLocation = document.getElementById('phrase');
         const ul = phraseLocation.firstElementChild;

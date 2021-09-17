@@ -3,7 +3,7 @@
  * app.js */
 
 const startButton = document.getElementById('btn__reset');
-const qwertyButtons = document.getElementById('qwerty'); 
+const qwertyButtons = document.getElementsByClassName('key'); 
 let game;
 
 startButton.addEventListener('click', e => {
@@ -11,9 +11,17 @@ startButton.addEventListener('click', e => {
     game.startGame();
 })
 
-qwertyButtons.addEventListener('click', (event) => {
-    const letter = game.activePhrase.checkLetter(event.target.textContent);
-    game.activePhrase.showMatchedLetter(letter);
-    console.log(letter);
-});
+for (let i=0; i<qwertyButtons.length; i++) {
+    qwertyButtons[i].addEventListener('click', (event) => {
+        game.handleInteraction(event.target)
+    });
 
+}
+
+document.addEventListener('keyup', event => {
+    for (let i=0; i<qwertyButtons.length; i++) {
+        if (event.key === qwertyButtons[i].textContent) {
+            game.handleInteraction(qwertyButtons[i])
+        }
+    }
+})
