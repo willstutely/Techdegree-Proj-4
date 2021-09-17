@@ -31,7 +31,6 @@
  * Checks if passed letter is in phrase
  * @param (string) letter - Letter to check
  */
-
     checkLetter(letter) {
         const phrase = this.phrase;
         let matchedLetter;
@@ -41,14 +40,12 @@
             }
         }
         return matchedLetter;
-        
     };
 
 /**
  * Displays passed letter on screen after a match is found
  * @param (string) letter - Letter to display
  */
-
     showMatchedLetter(letter) {
         const matchedLetter = document.querySelectorAll('.letter');
         matchedLetter.forEach(item => {
@@ -57,5 +54,4 @@
             }
         });
     }
-
 };

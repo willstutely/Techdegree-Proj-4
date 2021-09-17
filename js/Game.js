@@ -2,7 +2,7 @@
  * Project 4 - OOP Game App
  * Game.js */
 
- class Game {
+class Game {
     constructor() {
         this.missed = 0;
         this.phrases = this.createPhrases();
@@ -13,7 +13,6 @@
  * Create phrases for use in game
  * @return {array} An array of phrases that could be used in the game
  */
-
     createPhrases() {
         const phraseArray = [
             "Never give up never surrender",
@@ -29,13 +28,20 @@
  * Selects random phrase from phrases property
  * @return {Object} Phrase object chosen to be used
  */
-
     getRandomPhrase() {
         const randomNumber = Math.ceil(Math.random() * this.phrases.length) -1;
         const phrase = new Phrase(this.phrases[randomNumber])
         return phrase;
     };
 
+/**
+ * Begins game by selecting a random phrase and displaying it to user
+ * ...and:
+ * If a previous game had been played the game board is cleared by:
+ * 1. resetting lost hearts, 2. clearing QWERTY keyboard of selections,
+ * 3. removing previous phrase <li> elements, and 4. removing the 
+ * congratulations message
+ */
     startGame() {
         // Reset Lost Hearts
         const lives = document.querySelectorAll('.tries');
@@ -73,19 +79,15 @@
         // Remove the initial or 'game over' overlay and create a new phrase
         const overlay = document.getElementById('overlay');
         overlay.style.display = 'none';
-
         const newPhrase = game.getRandomPhrase();
         newPhrase.addPhraseToDisplay();
         this.activePhrase = newPhrase;
-        
-        
     };
 
 /**
  * Checks for winning move
  * @return {boolean} True if game has been won, false if game wasn't won
  */
-
     checkForWin() {
         const phraseLi = document.querySelectorAll('.letter');
         const phraseLiArray = [...phraseLi];
@@ -101,7 +103,6 @@
  * Removes a life from the scoreboard
  * Checks if player has remaining lives and ends game if player is out
  */
-
     removeLife() {
         this.missed += 1;
         if (this.missed === 5) {
@@ -120,7 +121,6 @@
  * Displays 'game over' message
  * @param {boolean} gameWon - Whether or not the user won the game
  */
-
     gameOver(gameWon) {
         const overlay = document.getElementById('overlay');
         const message = document.getElementById('game-over-message');
@@ -140,7 +140,6 @@
  * Handles onscreen keyboard button clicks
  * @param (HTMLButtonElement) button - The clicked button element
  */
-
     handleInteraction(button) {
         const checkedLetter = this.activePhrase.checkLetter(button.textContent);
         if (checkedLetter) {
