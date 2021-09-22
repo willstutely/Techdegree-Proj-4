@@ -43,38 +43,21 @@ class Game {
  * congratulations message
  */
     startGame() {
-        // Reset Lost Hearts
-        const lives = document.querySelectorAll('.tries');
-        lives.forEach(life => {
-            const image = life.firstElementChild;
-            if (image.src.includes("images/lostHeart.png")) {
-                return image.src = "images/liveHeart.png";
-            }
-        })
-        
-        // Clear QWERTY keyboard of selected letters
-        const chosen = document.querySelectorAll('.chosen')
-        chosen.forEach(item => {
-            item.className = "key";
-        })
-        const wrong = document.querySelectorAll('.wrong')
-        wrong.forEach(item => {
-            item.className = "key";
-        })
-        
-        // Remove previous phrase <li> elements
-        const phraseLocation = document.getElementById('phrase');
-        const ul = phraseLocation.firstElementChild;
-        while (ul.lastElementChild) {
-            ul.removeChild(ul.lastElementChild)
-        }
-        
         // Remove congratulations message
         const message = document.getElementById('game-over-message');
         if (message.firstElementChild) {
             message.removeChild(message.firstElementChild)
             message.textContent = "";
         }
+
+        // Enable keyboard buttons
+        const buttons = document.getElementsByClassName('key');
+        for (let i=0; i<buttons.length; i++) {
+            if (buttons[i].disabled) {
+                buttons[i].disabled = false;
+            }
+        }
+        
 
         // Remove the initial or 'game over' overlay and create a new phrase
         const overlay = document.getElementById('overlay');
@@ -112,10 +95,47 @@ class Game {
         for (let i=0; i<lives.length; i++) {
             const image = lives[i].firstElementChild;
             if (image.src.includes("images/liveHeart.png")) {
-                return image.src = "images/lostHeart.png";
+                $(image).fadeTo(1000, 0.1);
+                image.src = "images/lostHeart.png";
+                $(image).fadeTo(1000, 1);
+                return ;
+
             }
         }
     };
+
+
+/**
+ * Resets game lives, clears selected keys from keyboard,
+ * and removes the previous phrase 
+ */
+    clearGameBoard() {
+    // Reset Lost Hearts
+        const lives = document.querySelectorAll('.tries');
+        lives.forEach(life => {
+            const image = life.firstElementChild;
+            if (image.src.includes("images/lostHeart.png")) {
+                return image.src = "images/liveHeart.png";
+            }
+        })
+
+    // Clear QWERTY keyboard of selected letters
+        const chosen = document.querySelectorAll('.chosen')
+        chosen.forEach(item => {
+            item.className = "key";
+        })
+        const wrong = document.querySelectorAll('.wrong')
+        wrong.forEach(item => {
+            item.className = "key";
+        })
+
+    // Remove previous phrase <li> elements
+        const phraseLocation = document.getElementById('phrase');
+        const ul = phraseLocation.firstElementChild;
+        while (ul.lastElementChild) {
+            ul.removeChild(ul.lastElementChild)
+        }
+    }
 
 /**
  * Displays 'game over' message
@@ -131,10 +151,12 @@ class Game {
             const h = document.createElement('p');
             h.textContent = `"${this.activePhrase.phrase}"`;
             message.appendChild(h) 
+            this.clearGameBoard();
         } else if (this.missed === 5) {
             overlay.style.display = 'block';
             overlay.className = 'lose';
             message.textContent = "You were so close...better luck next time."
+            this.clearGameBoard();
         }
     };
 
@@ -147,10 +169,12 @@ class Game {
         if (checkedLetter) {
             this.activePhrase.showMatchedLetter(checkedLetter);
             button.className = "chosen";
+            button.disabled = true;
             this.gameOver(this.checkForWin());
         } else {
             button.className = "wrong";
             this.removeLife();
+            button.disabled = true;
         }
     };
  }
