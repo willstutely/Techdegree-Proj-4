@@ -21,7 +21,9 @@ class Game {
             "The stuff that dreams are made of",
             "Bridge over troubled water"
         ];
-        return phraseArray;
+        const phraseObjects = [];
+        phraseArray.forEach(phrase => {phraseObjects.push(new Phrase(phrase))});
+        return phraseObjects;
     };
 
 /**
@@ -30,7 +32,7 @@ class Game {
  */
     getRandomPhrase() {
         const randomNumber = Math.ceil(Math.random() * this.phrases.length) -1;
-        const phrase = new Phrase(this.phrases[randomNumber])
+        const phrase = this.phrases[randomNumber];
         return phrase;
     };
 
@@ -61,10 +63,9 @@ class Game {
         // Remove the initial or 'game over' overlay and create a new phrase
         const overlay = document.getElementById('overlay');
         overlay.style.display = 'none';
-        const newPhrase = this.getRandomPhrase();
-        newPhrase.addPhraseToDisplay();
-        this.activePhrase = newPhrase;
-    };
+        this.activePhrase = this.getRandomPhrase();
+        this.activePhrase.addPhraseToDisplay();
+        };
 
 /**
  * Checks for winning move
@@ -93,7 +94,7 @@ class Game {
         const lives = document.getElementsByClassName('tries');
         for (let i=0; i<lives.length; i++) {
             const image = lives[i].firstElementChild;
-            if (image.src.includes("images/liveHeart.png")) {
+            if (image.src.includes("images/liveHeart.png") && this.missed < 5) {
                 $(image).fadeTo(1000, 0.1);
                 image.src = "images/lostHeart.png";
                 $(image).fadeTo(1000, 1);
@@ -174,7 +175,10 @@ class Game {
             this.activePhrase.showMatchedLetter(checkedLetter);
             button.className = "chosen";
             button.disabled = true;
-            this.gameOver(this.checkForWin());
+            if (this.checkForWin()) {
+                this.gameOver(this.checkForWin());
+            }
+            
         } else {
             button.className = "wrong";
             this.removeLife();
