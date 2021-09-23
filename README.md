@@ -5,6 +5,6 @@ The OOP Game Show allows the user to engage in a less morbid iteration of "Hangm
 
 For style customization, jQuery was attached to this project, and the fadeOut() and fadeIn() animations were used on the blue hearts in the "removeLife()" method in the Game Class.  
 
-On the "Congratulations, you won!" page the original phrase is displayed.
+On the "Congratulations, you won!" page the original phrase is displayed with the first letter of each word capitalized.
 
 A new method in the Game Class "clearGameBoard()" was created to handle resetting the hearts, removing the old phrase, etc. with the goal of keeping the "gameOver()" method cleaner.
