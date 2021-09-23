@@ -58,11 +58,10 @@ class Game {
             }
         }
         
-
         // Remove the initial or 'game over' overlay and create a new phrase
         const overlay = document.getElementById('overlay');
         overlay.style.display = 'none';
-        const newPhrase = game.getRandomPhrase();
+        const newPhrase = this.getRandomPhrase();
         newPhrase.addPhraseToDisplay();
         this.activePhrase = newPhrase;
     };
@@ -99,11 +98,9 @@ class Game {
                 image.src = "images/lostHeart.png";
                 $(image).fadeTo(1000, 1);
                 return ;
-
             }
         }
     };
-
 
 /**
  * Resets game lives, clears selected keys from keyboard,
@@ -148,9 +145,16 @@ class Game {
             overlay.style.display = 'block';
             overlay.className = 'win';
             message.textContent = "Congratulations, you won!"
-            const h = document.createElement('p');
-            h.textContent = `"${this.activePhrase.phrase}"`;
-            message.appendChild(h) 
+
+        // Take active phrase and capitalize each first letter for the Congratulations page
+        // Code idea found on stackoverflow
+            const capitalizedPhrase = this.activePhrase.phrase.split(' ')
+                                        .map((character) => character.charAt(0).toUpperCase() + character.substring(1))
+                                        .join(' ');
+        // Create a paragraph element to display the completed phrase
+            const p = document.createElement('p');
+            p.textContent = `"${capitalizedPhrase}"`;
+            message.appendChild(p) 
             this.clearGameBoard();
         } else if (this.missed === 5) {
             overlay.style.display = 'block';
