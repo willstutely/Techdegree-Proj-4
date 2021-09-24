@@ -65,7 +65,12 @@ class Game {
         overlay.style.display = 'none';
         this.activePhrase = this.getRandomPhrase();
         this.activePhrase.addPhraseToDisplay();
-        };
+        const lives = document.querySelectorAll('.tries');
+        lives.forEach(life => {
+            $(life.firstElementChild).fadeTo(1000, 0.1)
+            $(life.firstElementChild).fadeTo(1000, 1)
+        })
+    };
 
 /**
  * Checks for winning move
